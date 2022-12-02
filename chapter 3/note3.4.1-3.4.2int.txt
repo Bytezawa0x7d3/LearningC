@@ -1,0 +1,123 @@
+int类型
+此类型表示正整数、负整数、零
+一般一个int值占用一个机器字长
+16位计算机的int取值范围是[-32768, 32767]
+系统一般还用一个特殊位表示整数的正负号
+
+int类型的有效声明语句
+int erns;
+int hogs, cows, goats;
+
+int获得值的途径
+1. 赋值运算符
+   cows = 112;
+2. 函数运算符，如scanf()
+3. 初始化变量
+   int hogs = 21;
+   int cows = 32, gaots = 14;
+   int dogs, cats = 94;
+   不推荐最后一种写法
+   cats被初始化为94，但dogs未被初始化赋值，容易使人误认和混淆
+   推荐将未初始化和初始化的变量分行归类声明
+声明不初始化：只为变量创建内存空间
+声明且初始化：为变量创建内存空间后并为其赋值
+
+int类型常量
+C语言中不含小数点和指数的数为整数
+22和-44都是整型常量
+22.0和2.2E1则不是整型常量
+非常大的整数也不是，而是long int等其他类型
+
+
+八进制和十六进制
+0x为十六进制表示的前缀
+0为八进制表示的前缀
+十进制表示的整数无需前缀
+十六进制数的每一位数由四位二进制数表示
+0x5 = 0b0101
+0x3 = 0b0011
+0x35的位组合（bit pattern）为0b00110101
+0x53的位组合（bit pattern）为0b01010011
+二进制每满4位时即十六进制满一位
+四位二进制数表示范围和一位十六进制数表示范围都是[0, 15]
+因此每位十六进制数可以分别转换成一个四位二进制数
+
+
+进制和存储
+不论数字采用二、八还是十六进制
+在计算机硬件中都以二进制方式编码和存储
+数字可以用不同方式表示，但存储方式统一
+
+
+其他整数类型
+1. short int
+   占用空间较小 适用于较小的整数 有符号
+2. long int
+   占用空间较大 适用于较大的整数 有符号
+3. long long int
+   占用更大的空间 至少占用64位 有符号
+4. unsigned int
+   无符号整数 将符号位也当作一个二进制位
+   比如16位机原本带符号整数范围是[-32768, 32767]
+   而unsigned int范围是[0, 65535]
+short long unsigned signed 都是C语言提供的附属关键字 用以修饰一个类型
+unsigned将有符号类型转换为无符号类型
+signed用于强调使用有符号类型的意图
+
+
+其他整数类型的声明示例
+long int estine;
+long johns;
+short int ears;
+short ribs;
+unsigned int s_count;
+unsigned players;
+unsigned long headcount;
+unsigned short yesvotes;
+long long ago;
+
+
+多种整数类型细节
+C语言为了适应不同机器，规定short占用空间不多于int，long占用空间不少于int
+不同机器采用不同的位存储short、long和int
+目前个人计算机的常见设置为：
+long long - 64 bits
+long - 32 bits
+short - 16 bits
+int - 16 or 32 bits (depends on natural word length of the computer)
+
+
+各整数类型范围
+C语言只规定了各类型的最小取值范围
+16位机：short and int [-32768, 32767]
+32位机：long [-2147483648, 2147483647]
+64位机：long long [-9223372036854775850, 9223372036854775807]
+        unsigned long long [0, 18446744073709551615]
+通用：unsigned short and unsigned int [0, 65535]
+      unsigned long [0, 4294967295]
+
+
+采用建议
+首先考虑unsigned类型，通常用于计数变量，因为不用复数，而且范围更大
+若一个数超出int范围但在long范围之内，采用long类型
+对于long比int占更多空间的系统这会降低计算速度，非必要不采用long
+如果一个机器的long和int占用空间相同，并确实需要32位整数，此时用long，这样更兼容16位机移植
+若确实需要64位整数，应采用long long类型
+如果一个机器的int占用32位，并要使用16位的值，用采用short以节省空间
+
+
+编译器自动处理
+对于数值超出声明时的类型的表示范围的量，编译器会将其视为更大类型，以下为升级顺序
+十进制常量：int -> long int -> unsigned long -> long long -> unsigned long long
+八进制和十六进制常量：int -> unsigned int -> long int -> continuous as the rule shown above
+
+
+较小常量以较大类型存储
+l L - long
+ll LL - long long
+ull ULL - unsigned long long
+若一个系统用16位存int，用32位存long
+会把7作为16位存储，把7L作为32位存储
+以上后缀也适用于与八进制和十六进制整数，如020L和0x10L
+
+   
