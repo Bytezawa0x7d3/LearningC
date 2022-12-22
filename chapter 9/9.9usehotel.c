@@ -10,8 +10,10 @@ int main(void)
     int code;
 
     while ((code = menu()) != QUIT)
+    // menu()函数和QUIT符号常量在其他文件中定义
     {
         switch (code)
+        // 根据输入值设置费率
         {
             case 1:
                 hotel_rate = HOTEL1;
