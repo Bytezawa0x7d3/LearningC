@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 
 char * string_in(const char s1[], const char s2[]);
@@ -7,38 +8,39 @@ int main(void)
 {
     char s1[] = "Hello world!";
     char s2[] = "wor";
-    char s3[] = "lol";
-    char * ret_val;
+    char s3[] = "llo";
+    char s4[] = "gee";
+    char * ptr;
 
-    if (ret_val = string_in(s1, s2))
-    {
-        printf("%s is in %s, beginning character location: %p\n",
-                s2, s1, ret_val);
-        puts(ret_val);
-    }
-    if (!string_in(s1, s3))
-        printf("%s is NOT in %s.", s3, s1);
+    ptr = string_in(s1, s2);
+    puts(ptr);
+    ptr = string_in(s1, s3);
+    puts(ptr);
+    ptr = string_in(s1, s4);
+    if (!ptr)
+        printf("%s is not in %s.", s4, s1);
 
     return 0;
 }
 
 char * string_in(const char s1[], const char s2[])
 {
+    int x, y;
     bool isin;
 
-    for (; *s1; s1++)
+    for (x = 0; x < (strlen(s1) - strlen(s2) + 1); x++)
     {   
         isin = true;
-        for (; *s2; s2++)
+        for (y = x; y < (x + strlen(s2)); y++)
         {
-            if (*s2 != *s1)
+            if (s1[y] != s2[y-x])
             {
                 isin = false;
                 break;
             }
         }
         if (isin)
-            return s1;
+            return &s1[x];
     }
 
     return NULL;
