@@ -12,11 +12,12 @@ int main()
         printf("x in inner block: %d at %p\n", x, &x);
     }
     printf("x in outer block: %d at %p\n", x, &x); // 外层块中的变量重新可见
-    while (int x = 31, x++ < 33)
+    while (x++ < 33) // 测试条件中使用的x是最外层的
     {
-        int x = 100;
+        int x = 100; // 此处定义了内层块中的x 隐藏了外层的
         x++;
         printf("x in while loop: %d at %p\n", x, &x);
+        // 每次循环结束 内层变量的内存都被释放 就像离开了块一样
     }
     printf("x in outer block: %d at %p\n", x, &x);
 
