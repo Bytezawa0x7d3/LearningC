@@ -22,21 +22,64 @@ char * s_gets(char * str, int n);
 int main(void)
 {
     struct seat seats[4][SEATNUM];
+    char func[2];
     
     init_seats(seats);
     
     puts("Here are the planes available:");
     puts("0) G102     1) G311");
     puts("2) G444     3) G159");
-    printf("\nSelect the plane: ");
-    
-    
+    printf("\nSelect the plane (q to quit): ");
+    while (scanf("%d", &plane) == 1)
+    {
+        if (plane < G102 || plane > G159)
+        {
+            printf("Invalid selection provided. Try again: ");
+            continue;
+        }
+        while (getchar() != '\n')
+            continue;
+        
+        puts("To choose a function, enter its letter label:");
+        puts("a) Show number of empty seats");
+        puts("b) Show list of empty seats");
+        puts("c) Show alphabetical list of seats");
+        puts("d) Assigne a customer to a seat assignment");
+        puts("e) Delete the seat assignment");
+        puts("f) Quit");
+        printf("\nEnter your choice of function: ");
+        s_gets(func, 2);
+        while (func[0] != 'f')
+        {
+            switch (func[0])
+            {
+            case 'a':
+                show_spare_num(seats[plane]);
+                break;
+            case 'b':
+                show_spare_list(seats[plane]);
+                break;
+            case 'c':
+                show_booked_alpha_list(seats[plane]);
+                break;
+            case 'd':
+                assign_customer(seats[plane]);
+                break;
+            case 'e':
+                delete_assignment(seats[plane]);
+                break;
+            default:
+                puts("No such function.");
+            }
+            printf("\nEnter your choice of function again: ");
+            s_gets(func, 2);
+        }
+        printf("Select the next plane to edit (q to quit): ");
+    }
+    printf("Done");
 
-
-
-
+    return 0;
 }
-
 
 
 void init_seats(struct seat seats[][SEATNUM])
@@ -45,7 +88,7 @@ void init_seats(struct seat seats[][SEATNUM])
 
     for (x = G102; x <= G159; x++)
         for (y = 0; y < SEATNUM; y++)
-            seats[x][y] = (struct seat){x + 1, spare, "\0", "\0"};
+            seats[x][y] = (struct seat){y + 1, spare, "\0", "\0"};
 }
 
 
